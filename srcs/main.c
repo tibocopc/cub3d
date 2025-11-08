@@ -6,7 +6,7 @@
 /*   By: xx <xx@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 17:33:32 by xx                #+#    #+#             */
-/*   Updated: 2025/11/07 13:32:08 by xx               ###   ########.fr       */
+/*   Updated: 2025/11/08 15:50:54 by xx               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,14 @@ int	main(int ac, char **av)
 	if (ac != 2 || check_extension(av[1]))
 		return (printf("Error, wrong file name\n"), 1);
 	data = malloc(sizeof(t_map));
+	if (!data)
+		return (printf("Error: malloc failed\n"), 1);
+	ft_bzero(data, sizeof(t_map));
 	data->map = get_map(av[1]);
+	if (!data->map)
+		return (printf("Error: could not read map\n"), 1);
+	if (get_map_gen(data))
+		return (printf("Error: invalid map\n"), 1);
 	if (check_dup_texture(data))
 		return (printf("error"), 1);
 	if (get_colors(data))
@@ -49,14 +56,16 @@ int	main(int ac, char **av)
 	get_west(data);
 	if (check_texture(data))
 		return (printf("error"), 1);
-	for (int i = 0; i < 3; i++)
-	{
-		printf("%d ", data->floor_color[i]);
-		printf("%d ", data->ceiling_color[i]);
-	}
+	if (vertical_walls(data->maps))
+		return (printf("zia"));
+	// for (int i = 0; i < 3; i++)
+	// {
+	// 	printf("%d ", data->floor_color[i]);
+	// 	printf("%d ", data->ceiling_color[i]);
+	// }
 	// printf("North : %s\n", data->no_texture);
 	// printf("South : %s\n", data->so_texture);
 	// printf("East  : %s\n", data->ea_texture);
 	// printf("West  : %s\n", data->we_texture);
-	// print_map(data->map);
+	print_map(data->maps);
 }

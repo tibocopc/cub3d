@@ -6,7 +6,7 @@
 /*   By: xx <xx@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:25:01 by xx                #+#    #+#             */
-/*   Updated: 2025/11/07 15:21:10 by xx               ###   ########.fr       */
+/*   Updated: 2025/11/08 15:15:28 by xx               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,24 @@ int	check_map_format(char **map)
 
 int	get_map_gen(t_map *data)
 {
+	char	**res;
+
 	if (check_map_format(data->map))
 		return (1);
-	data->map = copy_map(data->map);
-    
+	res = copy_map(data->map);
+	data->maps = set_map_rectangle(res, get_width(res));
 	return (0);
 }
 char	**copy_map(char **map)
 {
-	int i = 6;
-	int j;
-	int k = 0;
-	char **res;
+	int		i;
+	int		j;
+	int		k;
+	char	**res;
+
+	res = NULL;
+	i = 6;
+	k = 0;
 	res = ft_get_size(map, res);
 	while (map[i])
 	{
@@ -87,6 +93,83 @@ char	**copy_map(char **map)
 		i++;
 		k++;
 	}
-	res[k] = NULL;
+	return (res[k] = NULL, res);
+}
+
+int	get_width(char **map)
+{
+	int	i;
+	int	j;
+	int	max_width;
+
+	i = 0;
+	max_width = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+			j++;
+		if (max_width < j)
+			max_width = j;
+		i++;
+	}
+	return (max_width);
+}
+
+char	**set_map_rectangle(char **map, int s)
+{
+	int		i;
+	int		j;
+	char	**res;
+
+	res = malloc_rectangle(map, s + 1);
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			res[i][j] = map[i][j];
+			j++;
+		}
+		while (j < s)
+		{
+			res[i][j] = '1';
+			j++;
+		}
+		res[i][j] = '\0';
+		i++;
+	}
+	return (res[i] = NULL, res);
+}
+
+char	**malloc_rectangle(char **map, int s)
+{
+	int		count;
+	int		k;
+	char	**res;
+
+	count = 0;
+	while (map[count])
+		count++;
+	res = malloc(sizeof(char *) * (count + 1));
+	if (!res)
+		return (NULL);
+	k = 0;
+	while (k < count)
+	{
+		res[k] = malloc(sizeof(char) * s);
+		if (!res[k])
+		{
+			while (k-- > 0)
+				free(res[k]);
+			free(res);
+			return (NULL);
+		}
+		k++;
+	}
+	res[count] = NULL;
 	return (res);
 }

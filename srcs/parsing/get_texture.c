@@ -6,7 +6,7 @@
 /*   By: xx <xx@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 20:56:59 by xx                #+#    #+#             */
-/*   Updated: 2025/11/07 14:25:59 by xx               ###   ########.fr       */
+/*   Updated: 2025/11/08 15:31:42 by xx               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,26 @@ int	check_dup_texture(t_map *data)
 int	check_xpm(char *str)
 {
 	int	i;
+	int	flag;
 
+	flag = 0;
 	i = 0;
 	if (!str)
 		return (1);
 	if (ft_strlen(str) < 4)
 		return (1);
-	while (str[i] && !ft_iswhitespace(str[i]))
+	while (str[i])
+	{
+		if (str[i] == '.')
+			flag = 1;
+		if (str[i] == ' ' && flag == 0)
+			return (1);
 		i++;
-	i -= 4;
+	}
+	i--;
+	while (ft_iswhitespace(str[i]))
+		i--;
+	i -= 3;
 	if (ft_strncmp(&str[i], ".xpm", 4))
 		return (1);
 	return (0);

@@ -6,7 +6,7 @@
 #    By: xx <xx@student.42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/28 14:31:24 by aaiache           #+#    #+#              #
-#    Updated: 2025/11/07 14:22:41 by xx               ###   ########.fr        #
+#    Updated: 2025/11/07 17:14:14 by xx               ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,7 @@ RM      = rm -f
 
 BUILD_DIR = objs
 
-SRCS = srcs/main.c srcs/parsing/check_map.c srcs/parsing/get_map.c srcs/parsing/get_texture.c srcs/parsing/get_colors.c \
-			srcs/parsing/get_params.c
+SRCS = srcs/main.c srcs/parsing/check_map.c srcs/parsing/get_map.c srcs/parsing/get_texture.c srcs/parsing/get_colors.c srcs/parsing/get_params.c
 ALL_SRCS   = $(SRCS)
 OBJS       = $(ALL_SRCS:%.c=$(BUILD_DIR)/%.o)
 
