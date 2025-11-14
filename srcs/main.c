@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xx <xx@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tniagolo <tniagolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 17:33:32 by xx                #+#    #+#             */
-/*   Updated: 2025/11/08 15:50:54 by xx               ###   ########.fr       */
+/*   Updated: 2025/11/14 16:19:21 by tniagolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,16 @@ int	main(int ac, char **av)
 		return (printf("error"), 1);
 	if (vertical_walls(data->maps))
 		return (printf("zia"));
-	// for (int i = 0; i < 3; i++)
-	// {
-	// 	printf("%d ", data->floor_color[i]);
-	// 	printf("%d ", data->ceiling_color[i]);
-	// }
-	// printf("North : %s\n", data->no_texture);
-	// printf("South : %s\n", data->so_texture);
-	// printf("East  : %s\n", data->ea_texture);
-	// printf("West  : %s\n", data->we_texture);
+	if (check_map_content(data->maps))
+		return (printf("content zbi"));
+	for (int i = 0; i < 3; i++)
+	{
+		printf("F : %d\n", data->floor_color[i]);
+		printf("C : %d\n", data->ceiling_color[i]);
+	}
+	printf("North : %s\n", data->no_texture);
+	printf("South : %s\n", data->so_texture);
+	printf("East  : %s\n", data->ea_texture);
+	printf("West  : %s\n", data->we_texture);
 	print_map(data->maps);
 }
